@@ -182,3 +182,5 @@ ALTER COLUMN updated_at SET NOT NULL;
 
 ALTER TABLE movies
 ALTER COLUMN rating TYPE VARCHAR(10);
+
+alter table Payments add column provider_order_id varchar(255);

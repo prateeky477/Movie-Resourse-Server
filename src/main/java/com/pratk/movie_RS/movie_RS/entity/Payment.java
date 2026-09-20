@@ -31,7 +31,10 @@ public class Payment {
     private PaymentStatus status; // PENDING, SUCCESS, FAILED, REFUNDED
 
     private String provider; // "razorpay", "stripe", "mock"
+    private String providerSignature;
     private String transactionId;
+
+    private String providerOrderId;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

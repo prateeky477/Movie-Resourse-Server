@@ -3,10 +3,13 @@ package com.pratk.movie_RS.movie_RS.controller;
 import com.pratk.movie_RS.movie_RS.entity.Movie;
 import com.pratk.movie_RS.movie_RS.entity.Showtime;
 import com.pratk.movie_RS.movie_RS.entity.ShowtimeSeat;
+import com.pratk.movie_RS.movie_RS.records.HoldRequest;
 import com.pratk.movie_RS.movie_RS.service.ShowtimeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,5 +54,20 @@ public class ShowtimeController {
     @GetMapping("/showtime/{id}/seats")
     public List<ShowtimeSeat> getShowtimeSeats(@PathVariable Long id) {
         return showtimeService.getShowtimeSeats(id);
+    }
+
+    @PostMapping("/showtime/{id}/hold")
+    public List<ShowtimeSeat> holdSeats(@PathVariable Long id,
+                                        @RequestBody HoldRequest request,
+                                        @AuthenticationPrincipal Jwt jwt) {
+        return showtimeService.holdSeats(id, request.showtimeSeatIds(), jwt.getSubject());
+    }
+
+    @DeleteMapping("/showtime/{id}/release")
+    public ResponseEntity<Void> releaseSeats(@PathVariable Long id,
+                                             @RequestBody HoldRequest request,
+                                             @AuthenticationPrincipal Jwt jwt) {
+        showtimeService.releaseSeats(id, request.showtimeSeatIds(), jwt.getSubject());
+        return ResponseEntity.noContent().build();
     }
 }

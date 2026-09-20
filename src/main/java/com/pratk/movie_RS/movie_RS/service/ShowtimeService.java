@@ -11,4 +11,6 @@ public interface ShowtimeService {
     Showtime updateShowtime(Long id, Showtime showtime);
     void deleteShowtime(Long id);
     List<ShowtimeSeat> getShowtimeSeats(Long id);
+    List<ShowtimeSeat> holdSeats(Long showtimeId, List<Long> showtimeSeatIds, String userId);   // added
+    void releaseSeats(Long showtimeId, List<Long> showtimeSeatIds, String userId);
 }
